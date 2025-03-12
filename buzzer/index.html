@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>線上搶答鈴</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin-top: 50px;
+            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+            color: white;
+        }
+        #buzzer {
+            font-size: 40px;
+            padding: 20px 40px;
+            cursor: pointer;
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            transition: transform 0.2s;
+        }
+        #buzzer:hover {
+            transform: scale(1.1);
+        }
+        #reset {
+            margin-top: 20px;
+            font-size: 20px;
+            padding: 10px 20px;
+            background: #1e90ff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+        }
+        #winner {
+            margin-top: 30px;
+            font-size: 30px;
+            color: #2ed573;
+        }
+        #users {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>線上搶答鈴</h1>
+    <button id="buzzer" onclick="buzz()">搶答！</button>
+    <button id="reset" onclick="resetBuzzer()">重置</button>
+    <div id="winner">等待搶答...</div>
+    <div id="users">線上人數：<span id="userCount">1</span></div>
+
+    <script>
+        let userCount = Math.floor(Math.random() * 10) + 1; // 模擬線上人數
+
+        function updateUserCount() {
+            document.getElementById("userCount").textContent = userCount;
+        }
+
+        function buzz() {
+            playSound();
+            document.getElementById("winner").textContent = "有人搶答了！";
+        }
+
+        function resetBuzzer() {
+            document.getElementById("winner").textContent = "等待搶答...";
+        }
+
+        function playSound() {
+            const sound = new Audio("coin01.mp3");
+            sound.play().catch(error => console.log("音效播放失敗：", error));
+        }
+
+        setInterval(() => {
+            userCount += Math.floor(Math.random() * 3) - 1; // 模擬線上人數變化
+            if (userCount < 1) userCount = 1;
+            updateUserCount();
+        }, 5000);
+
+        updateUserCount();
+    </script>
+</body>
+</html>
